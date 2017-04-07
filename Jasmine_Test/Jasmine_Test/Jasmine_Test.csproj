@@ -68,6 +68,7 @@
   <ItemGroup>
     <Content Include="lib\angular\angular-mocks.js" />
     <Content Include="lib\angular\angular.min.js" />
+    <Content Include="lib\angular\angular.resource.min.js" />
     <Content Include="packages.config" />
     <Content Include="MIT.LICENSE" />
     <None Include="Web.Debug.config">
@@ -86,7 +87,9 @@
     <Content Include="lib\jasmine-2.3.4\jasmine.js" />
     <Content Include="lib\jasmine-2.3.4\jasmine_favicon.png" />
     <Content Include="SpecRunner.html" />
+    <Content Include="spec\movie-core\service.spec.js" />
     <Content Include="spec\omdb\service.spec.js" />
+    <Content Include="src\movie-core\service.js" />
     <Content Include="src\omdb\service.js" />
     <Content Include="Web.config" />
   </ItemGroup>

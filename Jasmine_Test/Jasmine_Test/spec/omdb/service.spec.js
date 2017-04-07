@@ -31,16 +31,24 @@
         //    });
         //});
 
-        console.log(movieData);
-        console.log(angular.mock.dump(movieData));
+        //console.log(movieData);
+        //console.log(angular.mock.dump(movieData));
 
         var response;
-        $httpBackend.when('GET', 'http://www.omdbapi.com/?v=1&t=star%20wars')
-                    .respond('200', movieData);
+
+        var expectedUrl = 'http://www.omdbapi.com/?v=1&t=star%20wars';
+        //var expectedUrl = function (url) {
+        //    return url.indexOf('http://www.omdbapi.com') !== -1;
+        //};
+
+        //console.log(expectedUrl);
+        $httpBackend.when('GET', expectedUrl)
+                    .respond(200, movieData);
 
         omdbApi.search('star wars')
                .then(function (data) {
                    response = data;
+                   //console.log(response);                   
                });
 
         $httpBackend.flush();
@@ -49,7 +57,36 @@
 
     });
 
+    it('should handle error', function () {
+        var response;
+
+        $httpBackend.expect('GET', 'http://www.omdbapi.com/?v=1&i=tt0076759')
+                    .respond(500);
+
+        omdbApi.find('tt0076759')
+               .then(function (data) {
+                   response = data;
+               })
+               .catch(function () {
+                   response = 'Error!';
+               });
+
+        $httpBackend.flush();
+        expect(response).toEqual('Error!');
+    });
+
     it('should return movie data by id', function () {
-        expect(omdbApi.find('tt0076759')).toEqual(movieDataById);
+        var response;
+
+        $httpBackend.expect('GET', 'http://www.omdbapi.com/?v=1&i=tt0076759')
+                    .respond(200, movieDataById);
+
+        omdbApi.find('tt0076759')
+               .then(function (data) {
+                   response = data;
+               });
+
+        $httpBackend.flush();
+        expect(response).toEqual(movieDataById);
     });
 });
